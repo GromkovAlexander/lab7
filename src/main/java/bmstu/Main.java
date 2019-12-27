@@ -73,7 +73,7 @@ public class Main {
                         }
                         System.out.println(isContains);
                         if (!isContains) {
-                            sendErorMsg(backend, adress);
+                            sendErorMsg(frontend, adress);
                         }
 
                     } else if (command.equals(GET)) {
@@ -94,7 +94,7 @@ public class Main {
                         }
                         System.out.println(isContains);
                         if (!isContains) {
-                            sendErorMsg(backend, adress);
+                            sendErorMsg(frontend, adress);
                         }
                     }
 
