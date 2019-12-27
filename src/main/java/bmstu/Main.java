@@ -15,6 +15,7 @@ public class Main {
 
     private final static String PUT = "PUT";
     private final static String GET = "GET";
+    private final static String NEW = "NEW";
     private final static String NOTIFY = "NOTIFY";
     private final static String DELIMETER = "#";
 
@@ -88,6 +89,43 @@ public class Main {
             }
 
             if (items.pollin(1)) {
+                while (true) {
+                    ZMsg messageFromBack = ZMsg.recvMsg(backend);
+
+                    ZFrame adress = messageFromBack.pop();
+
+                    String command = messageFromBack.popString();
+
+                    switch (command) {
+                        case NEW:
+                            String[] interval1 = messageFromBack.popString().split(DELIMETER);
+                            data.put(
+                                    new Pair<>(Integer.parseInt(interval1[0]), Integer.parseInt(interval1[1])),
+                                    new Pair<>(adress, System.currentTimeMillis())
+                            );
+                            break;
+                        case NOTIFY:
+                            String[] interval2 = messageFromBack.popString().split(DELIMETER);
+                            data.replace(
+                                    new Pair<>(Integer.parseInt(interval2[0]), Integer.parseInt(interval2[1])),
+                                    new Pair<>(adress, System.currentTimeMillis())
+                            );
+                            break;
+                        default:
+                            messageFromBack.wrap(messageFromBack.pop());
+                            messageFromBack.send(frontend);
+                            break;
+
+                    }
+
+
+
+                    more = backend.hasReceiveMore();
+
+                    if (!more) {
+                        break;
+                    }
+                }
 
             }
 

@@ -9,14 +9,14 @@ public class Dealer {
 
     private final static String dataForAll = "asdasdasdasdhasdahsjbdlashdblasdhbalshdblasdbhasdbahsdlahsd";
 
-    private final static String SOCKET_FRONT = "tcp://localhost:5559";
     private final static String SOCKET_BACK = "tcp://localhost:5560";
 
     private final static String PUT = "PUT";
     private final static String GET = "GET";
     private final static String NOTIFY = "NOTIFY";
     private final static String NEW = "NEW";
-    private final static String DELIMETER = "#";
+    private final static String DELIMETER = "Changed";
+    private final static String CHANGED = "#";
 
     private final static int TIME_DELAY = 10000;
 
@@ -53,31 +53,26 @@ public class Dealer {
                 if (msgFromMain.size() == 2) {
                     ZMsg msg = new ZMsg();
                     int index = Integer.parseInt(msgFromMain.pollLast().toString());
-
                     msg.add(GET);
                     ZFrame adress = msgFromMain.pop();
                     msg.add(adress);
                     msg.add("" + data.charAt(index - left));
                     msg.send(socket);
                 } else if (msgFromMain.size() == 3) {
-
+                    ZMsg msg = new ZMsg();
+                    String value = msgFromMain.pollLast().toString();
+                    int index = Integer.parseInt(msgFromMain.pollLast().toString());
+                    msg.add(PUT);
+                    ZFrame adress = msgFromMain.pop();
+                    msg.add(adress);
+                    data.setCharAt(index - left, value.charAt(0));
+                    msg.add(CHANGED);
+                    msg.send(socket);
                 }
-
             }
-
         }
-
-
-
     }
 
-    private static void sendMsg(ZMQ.Socket backend, ZFrame ... frames) {
-        ZMsg msgToBackend = new ZMsg();
-        for (ZFrame frame : frames) {
-            msgToBackend.add(frame);
-        }
-        msgToBackend.send(backend);
-    }
 
     private static void sendMsg(ZMQ.Socket backend, String ... frames) {
         ZMsg msgToBackend = new ZMsg();
