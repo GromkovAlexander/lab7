@@ -19,7 +19,7 @@ public class Main {
     private final static String NEW = "NEW";
     private final static String NOTIFY = "NOTIFY";
     private final static String DELIMETER = "#";
-    private final static String NOT_FIND = "NOT FIND";
+    private final static String NOT_FOUND = "NOT FOUND";
 
     private final static int TIME_DELAY = 3000;
     private final static int DOUBLE_TIME_DELAY = TIME_DELAY * 2;
@@ -48,6 +48,7 @@ public class Main {
                 while (true) {
 
                     ZMsg messageFromFront = ZMsg.recvMsg(frontend);
+                    boolean isContains = false;
 
                     ZFrame adress = messageFromFront.pop();
                     ZFrame nullFrame = messageFromFront.pop();
@@ -57,7 +58,6 @@ public class Main {
                     if (command.equals(PUT)) {
                         ZFrame index = messageFromFront.pop();
                         int parseIndex = Integer.parseInt(index.toString());
-                        boolean isContains = false;
 
 
                         ZFrame characher = messageFromFront.pop();
@@ -71,16 +71,11 @@ public class Main {
                                 sendMsg(backend, serverAdress, adress, index, characher);
                             }
                         }
-                        System.out.println(isContains);
-                        if (!isContains) {
-                            sendErorMsg(frontend, adress);
-                        }
+
 
                     } else if (command.equals(GET)) {
                         ZFrame index = messageFromFront.pop();
                         int parseIndex = Integer.parseInt(index.toString());
-                        boolean isContains = false;
-
 
                         for (Map.Entry<Pair<Integer, Integer>, Pair<ZFrame, Long>> serverInfo : data.entrySet()) {
                             int left = serverInfo.getKey().getKey();
@@ -92,10 +87,10 @@ public class Main {
 //                                break;
                             }
                         }
-                        System.out.println(isContains);
-                        if (!isContains) {
-                            sendErorMsg(frontend, adress);
-                        }
+                    }
+
+                    if (!isContains) {
+                        sendErorMsg(frontend, adress);
                     }
 
 
@@ -171,7 +166,7 @@ public class Main {
 
     private static void sendErorMsg(ZMQ.Socket frontend, ZFrame adress) {
         ZMsg errMsg = new ZMsg();
-        errMsg.add(NOT_FIND);
+        errMsg.add(NOT_FOUND);
         errMsg.wrap(adress);
         errMsg.send(frontend);
     }
