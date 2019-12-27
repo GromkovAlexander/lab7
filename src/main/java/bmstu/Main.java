@@ -71,6 +71,7 @@ public class Main {
                                 sendMsg(backend, serverAdress, adress, index, characher);
                             }
                         }
+                        System.out.println(isContains);
                         if (!isContains) {
                             sendErorMsg(backend, adress);
                         }
@@ -91,6 +92,7 @@ public class Main {
 //                                break;
                             }
                         }
+                        System.out.println(isContains);
                         if (!isContains) {
                             sendErorMsg(backend, adress);
                         }
