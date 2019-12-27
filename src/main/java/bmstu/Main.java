@@ -30,7 +30,9 @@ public class Main {
 
             if (items.pollin(0)) {
                 ZMsg messageFromFront = ZMsg.recvMsg(frontend);
-                more = m
+                more = frontend.hasReceiveMore();
+
+
             }
 
         }
