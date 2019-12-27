@@ -53,12 +53,12 @@ public class Main {
                     ZFrame nullFrame = messageFromFront.pop();
 
                     String command = messageFromFront.popString();
-
-                    boolean isContains = false;
-
+                    
                     if (command.equals(PUT)) {
                         ZFrame index = messageFromFront.pop();
                         int parseIndex = Integer.parseInt(index.toString());
+                        boolean isContains = false;
+
 
                         ZFrame characher = messageFromFront.pop();
 
@@ -71,10 +71,15 @@ public class Main {
                                 sendMsg(backend, serverAdress, adress, index, characher);
                             }
                         }
+                        if (!isContains) {
+                            sendErorMsg(backend, adress);
+                        }
 
                     } else if (command.equals(GET)) {
                         ZFrame index = messageFromFront.pop();
                         int parseIndex = Integer.parseInt(index.toString());
+                        boolean isContains = false;
+
 
                         for (Map.Entry<Pair<Integer, Integer>, Pair<ZFrame, Long>> serverInfo : data.entrySet()) {
                             int left = serverInfo.getKey().getKey();
@@ -86,11 +91,12 @@ public class Main {
 //                                break;
                             }
                         }
+                        if (!isContains) {
+                            sendErorMsg(backend, adress);
+                        }
                     }
 
-                    if (!isContains) {
-                        sendErorMsg(backend, adress);
-                    }
+
 
                     more = frontend.hasReceiveMore();
                     if (!more) {
