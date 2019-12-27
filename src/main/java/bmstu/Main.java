@@ -53,7 +53,7 @@ public class Main {
                     ZFrame nullFrame = messageFromFront.pop();
 
                     String command = messageFromFront.popString();
-                    
+
                     if (command.equals(PUT)) {
                         ZFrame index = messageFromFront.pop();
                         int parseIndex = Integer.parseInt(index.toString());
