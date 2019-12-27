@@ -23,7 +23,7 @@ public class Dealer {
     public static void main(String[] args) {
         ZContext context = new ZContext();
         ZMQ.Socket socket = context.createSocket(SocketType.REQ);
-        socket.bind(SOCKET_BACK);
+        socket.connect(SOCKET_BACK);
 
         Scanner in = new Scanner(System.in);
         int left = in.nextInt();

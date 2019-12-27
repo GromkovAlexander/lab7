@@ -11,7 +11,7 @@ public class Client {
     public static void main(String[] args) {
         ZContext context = new ZContext();
         ZMQ.Socket socket = context.createSocket(SocketType.REQ);
-        socket.bind(SOCKET_FRONT);
+        socket.connect(SOCKET_FRONT);
         Scanner in = new Scanner(System.in);
 
 
