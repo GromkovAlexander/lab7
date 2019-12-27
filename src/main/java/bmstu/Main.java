@@ -107,7 +107,6 @@ public class Main {
             if (items.pollin(1)) {
                 while (true) {
                     ZMsg messageFromBack = ZMsg.recvMsg(backend);
-                    System.out.println(messageFromBack);
 
                     ZFrame adress = messageFromBack.pop();
 
