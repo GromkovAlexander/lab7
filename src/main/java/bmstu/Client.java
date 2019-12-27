@@ -4,7 +4,7 @@ import org.zeromq.*;
 
 import java.util.Scanner;
 
-public class Main {
+public class Client {
     public static void main(String[] args) {
         ZContext context = new ZContext();
         ZMQ.Socket socket = context.createSocket(SocketType.REQ);
@@ -16,11 +16,14 @@ public class Main {
 
             String com = in.nextLine();
 
-            if (com.startsWith("GET")) {
-
-            } else if (com.startsWith("PUT")) {
-                
+            ZMsg msg = new ZMsg();
+            for (int i = 0; i < com.split(" ").length; i++) {
+                msg.add(com.split(" ")[i]);
             }
+
+            msg.send(socket);
+
+
 
         }
     }
