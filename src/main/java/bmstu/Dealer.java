@@ -26,6 +26,16 @@ public class Dealer {
 
         StringBuilder data = new StringBuilder(dataForAll.substring(left, right));
 
+        long time = System.currentTimeMillis();
+
+        ZMQ.Poller items = context.createPoller(1);
+        items.register(socket, ZMQ.Poller.POLLIN);
+
+
+        while(!Thread.currentThread().isInterrupted()) {
+
+        }
+
 
 
     }

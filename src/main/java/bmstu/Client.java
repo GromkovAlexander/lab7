@@ -16,7 +16,7 @@ public class Client {
         Scanner in = new Scanner(System.in);
 
 
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
 
             String com = in.nextLine();
 
