@@ -15,6 +15,9 @@ public class Main {
 
     private final static String PUT = "PUT";
     private final static String GET = "GET";
+    private final static String NOTIFY = "NOTIFY";
+    private final static String DELIMETER = "#";
+
 
     public static void main(String[] args) {
 
