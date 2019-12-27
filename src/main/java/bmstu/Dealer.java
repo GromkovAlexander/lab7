@@ -51,6 +51,15 @@ public class Dealer {
                 ZMsg msgFromMain = ZMsg.recvMsg(socket);
 
                 if (msgFromMain.size() == 2) {
+                    ZMsg msg = new ZMsg();
+                    int index = Integer.parseInt(msgFromMain.pollLast().toString());
+
+                    msg.add(GET);
+                    ZFrame adress = msgFromMain.pop();
+                    msg.add(adress);
+                    msg.add("" + data.charAt(index - left));
+                    msg.send(socket);
+                } else if (msgFromMain.size() == 3) {
 
                 }
 
