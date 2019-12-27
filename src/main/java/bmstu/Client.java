@@ -26,6 +26,11 @@ public class Client {
 
             msg.send(socket);
 
+            ZMsg response = ZMsg.recvMsg(socket);
+            System.out.println(response.pop().toString());
+
+            response.destroy();
+
 
 
         }
