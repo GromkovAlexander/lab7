@@ -18,7 +18,7 @@ public class Dealer {
     private final static String DELIMETER = "#";
     private final static String CHANGED = "Changed";
 
-    private final static int TIME_DELAY = 10000;
+    private final static int TIME_DELAY = 3000;
 
     public static void main(String[] args) {
 

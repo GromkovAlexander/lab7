@@ -19,6 +19,9 @@ public class Main {
     private final static String NOTIFY = "NOTIFY";
     private final static String DELIMETER = "#";
 
+    private final static int TIME_DELAY = 3000;
+    private final static int DOUBLE_TIME_DELAY = TIME_DELAY * 2;
+
 
     public static void main(String[] args) {
 
@@ -57,7 +60,7 @@ public class Main {
                         for (Map.Entry<Pair<Integer, Integer>, Pair<ZFrame, Long>> serverInfo : data.entrySet()) {
                             int left = serverInfo.getKey().getKey();
                             int right = serverInfo.getKey().getValue();
-                            if (left <= parseIndex && right > parseIndex) {
+                            if (left <= parseIndex && right > parseIndex && isAlive(serverInfo)) {
                                 ZFrame serverAdress = serverInfo.getValue().getKey().duplicate();
                                 sendMsg(backend, serverAdress, adress, index, characher);
                             }
@@ -70,7 +73,7 @@ public class Main {
                         for (Map.Entry<Pair<Integer, Integer>, Pair<ZFrame, Long>> serverInfo : data.entrySet()) {
                             int left = serverInfo.getKey().getKey();
                             int right = serverInfo.getKey().getValue();
-                            if (left <= parseIndex && right > parseIndex) {
+                            if (left <= parseIndex && right > parseIndex && isAlive(serverInfo)) {
                                 ZFrame serverAdress = serverInfo.getValue().getKey().duplicate();
                                 sendMsg(backend, serverAdress, adress, index);
                             }
@@ -129,7 +132,14 @@ public class Main {
 
     }
 
-    
+    private static boolean isAlive(Map.Entry<Pair<Integer, Integer>, Pair<ZFrame, Long>> storage) {
+        long now = System.currentTimeMillis();
+        if (now - storage.getValue().getValue() > DOUBLE_TIME_DELAY) {
+            data.remove(storage);
+            return false;
+        }
+        return true;
+    }
 
 
 
