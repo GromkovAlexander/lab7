@@ -9,6 +9,9 @@ public class Main {
     private final static String SOCKET_FRONT = "tcp://localhost:5559";
     private final static String SOCKET_BACK = "tcp://localhost:5560";
 
+    private final static String PUT = "PUT";
+    private final static String GET = "GET";
+
     public static void main(String[] args) {
 
         ZContext context = new ZContext();
@@ -32,7 +35,16 @@ public class Main {
                 ZMsg messageFromFront = ZMsg.recvMsg(frontend);
                 more = frontend.hasReceiveMore();
 
+                ZFrame adress = messageFromFront.pop();
+                ZFrame nullFrame = messageFromFront.pop();
 
+                String command = messageFromFront.popString();
+
+                if (command.equals(PUT)) {
+                    ZFrame index = messageFromFront.pop();
+                } else if (command.equals(GET)) {
+
+                }
             }
 
         }
