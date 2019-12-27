@@ -83,7 +83,7 @@ public class Main {
                                 isContains = true;
                                 ZFrame serverAdress = serverInfo.getValue().getKey().duplicate();
                                 sendMsg(backend, serverAdress, adress, index);
-                                break;
+//                                break;
                             }
                         }
                     }
