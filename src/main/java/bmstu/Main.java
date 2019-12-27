@@ -3,6 +3,7 @@ import javafx.util.Pair;
 import org.zeromq.ZContext;
 import org.zeromq.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class Main {
     private final static String NEW = "NEW";
     private final static String NOTIFY = "NOTIFY";
     private final static String DELIMETER = "#";
+    private final static String NOT_FIND = "NOT FIND";
 
     private final static int TIME_DELAY = 3000;
     private final static int DOUBLE_TIME_DELAY = TIME_DELAY * 2;
@@ -44,12 +46,15 @@ public class Main {
 
             if (items.pollin(0)) {
                 while (true) {
+
                     ZMsg messageFromFront = ZMsg.recvMsg(frontend);
 
                     ZFrame adress = messageFromFront.pop();
                     ZFrame nullFrame = messageFromFront.pop();
 
                     String command = messageFromFront.popString();
+
+                    boolean isContains = false;
 
                     if (command.equals(PUT)) {
                         ZFrame index = messageFromFront.pop();
@@ -61,6 +66,7 @@ public class Main {
                             int left = serverInfo.getKey().getKey();
                             int right = serverInfo.getKey().getValue();
                             if (left <= parseIndex && right > parseIndex && isAlive(serverInfo)) {
+                                isContains = true;
                                 ZFrame serverAdress = serverInfo.getValue().getKey().duplicate();
                                 sendMsg(backend, serverAdress, adress, index, characher);
                             }
@@ -74,10 +80,16 @@ public class Main {
                             int left = serverInfo.getKey().getKey();
                             int right = serverInfo.getKey().getValue();
                             if (left <= parseIndex && right > parseIndex && isAlive(serverInfo)) {
+                                isContains = true;
                                 ZFrame serverAdress = serverInfo.getValue().getKey().duplicate();
                                 sendMsg(backend, serverAdress, adress, index);
+                                break;
                             }
                         }
+                    }
+
+                    if (!isContains) {
+                        sendErorMsg(backend, adress);
                     }
 
                     more = frontend.hasReceiveMore();
@@ -145,9 +157,14 @@ public class Main {
 
     private static void sendMsg(ZMQ.Socket backend, ZFrame ... frames) {
         ZMsg msgToBackend = new ZMsg();
-        for (ZFrame frame : frames) {
-            msgToBackend.add(frame);
-        }
+        msgToBackend.addAll(Arrays.asList(frames));
         msgToBackend.send(backend);
+    }
+
+    private static void sendErorMsg(ZMQ.Socket frontend, ZFrame adress) {
+        ZMsg errMsg = new ZMsg();
+        errMsg.add(adress);
+        errMsg.add(NOT_FIND);
+        errMsg.send(frontend);
     }
 }
