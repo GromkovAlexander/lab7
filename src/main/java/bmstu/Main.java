@@ -171,8 +171,8 @@ public class Main {
 
     private static void sendErorMsg(ZMQ.Socket frontend, ZFrame adress) {
         ZMsg errMsg = new ZMsg();
-        errMsg.add(adress);
         errMsg.add(NOT_FIND);
+        errMsg.wrap(adress);
         errMsg.send(frontend);
     }
 }
