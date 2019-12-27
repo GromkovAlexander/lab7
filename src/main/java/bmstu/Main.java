@@ -63,7 +63,6 @@ public class Main {
                             }
                         }
 
-
                     } else if (command.equals(GET)) {
                         ZFrame index = messageFromFront.pop();
                         int parseIndex = Integer.parseInt(index.toString());
@@ -79,7 +78,6 @@ public class Main {
                     }
 
                     more = frontend.hasReceiveMore();
-
                     if (!more) {
                         break;
                     }
@@ -91,6 +89,7 @@ public class Main {
             if (items.pollin(1)) {
                 while (true) {
                     ZMsg messageFromBack = ZMsg.recvMsg(backend);
+                    System.out.println(messageFromBack);
 
                     ZFrame adress = messageFromBack.pop();
 
@@ -118,10 +117,7 @@ public class Main {
 
                     }
 
-
-
                     more = backend.hasReceiveMore();
-
                     if (!more) {
                         break;
                     }
@@ -132,6 +128,8 @@ public class Main {
         }
 
     }
+
+    
 
 
 

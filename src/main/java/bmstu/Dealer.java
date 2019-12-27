@@ -15,21 +15,23 @@ public class Dealer {
     private final static String GET = "GET";
     private final static String NOTIFY = "NOTIFY";
     private final static String NEW = "NEW";
-    private final static String DELIMETER = "Changed";
-    private final static String CHANGED = "#";
+    private final static String DELIMETER = "#";
+    private final static String CHANGED = "Changed";
 
     private final static int TIME_DELAY = 10000;
 
     public static void main(String[] args) {
-        ZContext context = new ZContext();
-        ZMQ.Socket socket = context.createSocket(SocketType.REQ);
-        socket.connect(SOCKET_BACK);
+
 
         Scanner in = new Scanner(System.in);
         int left = in.nextInt();
         int right = in.nextInt();
 
         StringBuilder data = new StringBuilder(dataForAll.substring(left, right));
+
+        ZContext context = new ZContext();
+        ZMQ.Socket socket = context.createSocket(SocketType.DEALER);
+        socket.connect(SOCKET_BACK);
 
         long time = System.currentTimeMillis();
 
