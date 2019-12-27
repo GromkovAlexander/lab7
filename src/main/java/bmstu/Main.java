@@ -10,8 +10,8 @@ public class Main {
 
     private static HashMap<Pair<Integer, Integer>, Pair<ZFrame, Long>> data = new HashMap<>();
 
-    private final static String SOCKET_FRONT = "tcp://localhost:5559";
-    private final static String SOCKET_BACK = "tcp://localhost:5560";
+    private final static String SOCKET_FRONT = "tcp://localhost:5579";
+    private final static String SOCKET_BACK = "tcp://localhost:5580";
 
     private final static String PUT = "PUT";
     private final static String GET = "GET";

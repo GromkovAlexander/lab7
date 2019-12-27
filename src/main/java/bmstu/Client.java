@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Client {
 
-    private final static String SOCKET_FRONT = "tcp://localhost:5559";
+    private final static String SOCKET_FRONT = "tcp://localhost:5579";
 
     public static void main(String[] args) {
         ZContext context = new ZContext();

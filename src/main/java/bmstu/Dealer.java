@@ -9,7 +9,7 @@ public class Dealer {
 
     private final static String dataForAll = "asdasdasdasdhasdahsjbdlashdblasdhbalshdblasdbhasdbahsdlahsd";
 
-    private final static String SOCKET_BACK = "tcp://localhost:5560";
+    private final static String SOCKET_BACK = "tcp://localhost:5580";
 
     private final static String PUT = "PUT";
     private final static String GET = "GET";
