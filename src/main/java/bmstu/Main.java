@@ -3,7 +3,6 @@ import javafx.util.Pair;
 import org.zeromq.ZContext;
 import org.zeromq.*;
 
-import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
